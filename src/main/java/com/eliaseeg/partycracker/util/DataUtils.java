@@ -16,7 +16,7 @@ public class DataUtils {
      * @param key - Key that will be used to retrieve said data.
      * @param value - The actual data value that we will be applying to the item.
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes"})
     public static void setPersistentData(ItemStack item, String key, String value) {
         if (item != null && item.getItemMeta() != null) {
             ItemMeta meta = item.getItemMeta();
@@ -30,14 +30,14 @@ public class DataUtils {
      * Checks if an item has any String data values for a specific key.
      * @param item - ItemStack we are checking.
      * @param key - The key we are checking.
-     * @returns true if there was any value associated with the given key.
+     * @return boolean - true if there was any value associated with the given key.
      */
     public static boolean hasData(ItemStack item, String key) {
         NamespacedKey namedKey = new NamespacedKey(PartyCrackerPlugin.getInstance(), key);
         if (item != null && item.getItemMeta() != null) {
             ItemMeta meta = item.getItemMeta();
             PersistentDataContainer container = meta.getPersistentDataContainer();
-            if (container.has(namedKey , PersistentDataType.STRING)) return true;
+            return container.has(namedKey, PersistentDataType.STRING);
         }
         return false;
     }
@@ -46,7 +46,7 @@ public class DataUtils {
      * Retrieves the data for a given key. Use DataUtils#hasData first to ensure there's an actual value tied to this key.
      * @param item - The ItemStack we are checking.
      * @param key - The key we are checking.
-     * @returns the value of the key tied to the item.
+     * @return String - the value of the key tied to the item.
      */
     public static String getData(ItemStack item, String key) {
         String value = null;

@@ -24,7 +24,7 @@ public class PartyCracker {
     private final boolean enchantGlow;
 
     // Explosion related values
-    @Getter private final WeightedCollection<String> rewardKeys = new WeightedCollection<String>();
+    @Getter private final WeightedCollection<String> rewardKeys = new WeightedCollection<>();
     @Getter private final List<String> particles;
     @Getter private final List<String> sounds;
     @Getter private final int explosionTime;

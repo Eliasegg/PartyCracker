@@ -11,7 +11,7 @@ import java.util.List;
 public class PartyCrackersManager {
 
     private static volatile PartyCrackersManager instance;
-    @Getter private List<PartyCracker> crackers = new ArrayList<>();
+    @Getter private final List<PartyCracker> crackers = new ArrayList<>();
 
     private PartyCrackersManager() {}
 

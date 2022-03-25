@@ -28,10 +28,10 @@ public class PartyCrackerScheduler implements Runnable {
 
     private final Pattern amountPattern = Pattern.compile("(\\$\\{random_\\d{1,3}:\\d{1,3}\\})");   // Example: {random_20:10}
 
-    private PartyCracker partyCracker;
-    private Player player;
-    private Item item;
-    private Random random = new Random();
+    private final PartyCracker partyCracker;
+    private final Player player;
+    private final Item item;
+    private final Random random = new Random();
 
     public PartyCrackerScheduler(PartyCracker partyCracker, Player player, Item item) {
         this.partyCracker = partyCracker;
@@ -45,7 +45,7 @@ public class PartyCrackerScheduler implements Runnable {
         String rewardKey = this.partyCracker.nextReward();
         String rewardPath = "crackers." + partyCracker.getCrackerType() + ".rewards." + rewardKey;
 
-        Map<String, String> data = new HashMap<String, String>();
+        Map<String, String> data = new HashMap<>();
         data.put("player", player.getName());
 
         // Replace {random_20:10} and {player}
@@ -63,9 +63,7 @@ public class PartyCrackerScheduler implements Runnable {
         }
 
         if (!(config.getStringList(rewardPath + ".chat_messages").isEmpty()) && (config.getStringList(rewardPath + ".chat_messages").get(0).length() > 1)) {
-            config.getStringList(rewardPath + ".chat_messages").forEach(message -> {
-                Bukkit.broadcastMessage(HexUtils.applyColor(StrSubstitutor.replace(message, data)));
-            });
+            config.getStringList(rewardPath + ".chat_messages").forEach(message -> Bukkit.broadcastMessage(HexUtils.applyColor(StrSubstitutor.replace(message, data))));
         }
 
         // Add placeholder effect and remove it as well.
@@ -75,12 +73,7 @@ public class PartyCrackerScheduler implements Runnable {
                 Hologram hologram = DHAPI.createHologram(UUID.randomUUID().toString(), this.item.getLocation().add(0, config.getStringList("crackers." + partyCracker.getCrackerType() + ".rewards." + rewardKey + ".after_placeholder.lines").size() * 0.7, 0), false,  HexUtils.applyColor(config.getStringList(rewardPath + ".after_placeholder.lines")));
                 DHAPI.addHologramLine(hologram, "#ICON: " + config.getString(rewardPath + ".after_placeholder.material"));
 
-                Bukkit.getServer().getScheduler().runTaskLater(PartyCrackerPlugin.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-                        hologram.delete();
-                    }
-                }, (20 * partyCracker.getDisappearAfter()));
+                Bukkit.getServer().getScheduler().runTaskLater(PartyCrackerPlugin.getInstance(), hologram::delete, (20 * partyCracker.getDisappearAfter()));
             }
         }
 
@@ -98,27 +91,14 @@ public class PartyCrackerScheduler implements Runnable {
         String animation = config.getStringList("crackers." + this.partyCracker.getCrackerType() + ".animation_list").get(this.random.nextInt(config.getStringList("crackers." + this.partyCracker.getCrackerType() + ".animation_list").size()));
 
         ParticleDisplay display = ParticleDisplay.display(location, particle);
-        config.getStringList("crackers." + this.partyCracker.getCrackerType() + ".particle_list").get(this.random.nextInt(config.getStringList("crackers." + this.partyCracker.getCrackerType() + ".particle_list").size()));
 
         switch (animation) {
-            case "BLACK_SUN":
-                XParticle.blackSun(3, .5, 5, 1, display);
-                break;
-            case "DIAMOND":
-                XParticle.diamond(0.1, 0.3, 2, display);
-                break;
-            case "FLOWER":
-                XParticle.flower(5, 2, display, () -> XParticle.magicCircles(PartyCrackerPlugin.getInstance(), 0.1, 0.3, 0.5, 0.4, display));
-                break;
-            case "RINGS":
-                XParticle.infinity(3, 5, display);
-                break;
-            case "MEGUMIN_EXPLOSION":
-                XParticle.meguminExplosion(6, display);
-                break;
-            default:
-                XParticle.infinity(3, 5, display);
-                break;
+            case "BLACK_SUN" -> XParticle.blackSun(3, .5, 5, 1, display);
+            case "DIAMOND" -> XParticle.diamond(0.1, 0.3, 2, display);
+            case "FLOWER" -> XParticle.flower(5, 2, display, () -> XParticle.magicCircles(PartyCrackerPlugin.getInstance(), 0.1, 0.3, 0.5, 0.4, display));
+            case "RINGS" -> XParticle.infinity(3, 5, display);
+            case "MEGUMIN_EXPLOSION" -> XParticle.meguminExplosion(6, display);
+            default -> XParticle.infinity(3, 5, display);
         }
     }
 

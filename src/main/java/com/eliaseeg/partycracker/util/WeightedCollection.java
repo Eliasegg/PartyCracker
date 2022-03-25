@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 public class WeightedCollection<E> {
 
-    private final NavigableMap<Double, E> map = new TreeMap<Double, E>();
+    private final NavigableMap<Double, E> map = new TreeMap<>();
     private final Random random;
     private double total = 0;
 
@@ -18,11 +18,10 @@ public class WeightedCollection<E> {
         this.random = random;
     }
 
-    public WeightedCollection<E> add(double weight, E result) {
-        if (weight <= 0) return this;
+    public void add(double weight, E result) {
+        if (weight <= 0) return;
         total += weight;
         map.put(total, result);
-        return this;
     }
 
     public E next() {

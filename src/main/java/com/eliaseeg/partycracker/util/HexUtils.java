@@ -34,7 +34,6 @@ public class HexUtils {
     public static String applyColor(String message){
         Matcher matcher = hexPattern.matcher(message);
         StringBuffer sb = new StringBuffer();
-        String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         if (MinecraftVersion.get().greaterThanOrEqualTo(MinecraftVersion.v1_16)) {
             while (matcher.find()) {
                 String hex = matcher.group();
@@ -69,8 +68,8 @@ enum MinecraftVersion {
     v1_17( "1_17", 9 ),
     v1_18( "1_18", 10 );
 
-    private int order;
-    private String key;
+    private final int order;
+    private final String key;
 
     MinecraftVersion(String key, int v) {
         this.key = key;
