@@ -1,0 +1,133 @@
+# PartyCracker configuration file! all fields are pretty self explanatory
+# but I have left comments for all of the fields in the first example
+# as well as additional notes where I felt they fit well into.
+# I hope you like the plugin!
+crackers:
+  # If you'd like to add a new PartyCracker type, just copy and paste
+  # this configuration section and give it another name. (See: special cracker type)
+  normal:
+    item:
+      # Material for this specific cracker type.
+      material: REDSTONE
+      # Name for the cracker type item.
+      # Supports both color codes (EX: &e) and RGB for 1.16+ (EX: &#FFFFFF).
+      name: '&eParty Cracker: Normal!'
+      # Lore for the item.
+      # Supports both color codes (EX: &e) and RGB for 1.16+ (EX: &#FFFFFF).
+      lore:
+        - '&eDrop the item on the ground'
+        - '&7in order to receive &l&arewards!'
+      # Whether you'd like that this item has enchantment glow or not.
+      glow: false
+    # How many seconds it will take for this cracker to explode
+    explosion_time: 3
+    # How many seconds it will take for the placeholder (if enabled) item to disappear.
+    #  See the rewards section for more info.
+    disappear_after: 5
+    # List of particles to use, it will pick a random one.
+    particle_list:
+      - 'TOTEM'
+      - 'END_ROD'
+      - 'FLAME'
+      - 'NOTE'
+    # List of animations to use, it will pick a random one.
+    # Available animations: BLACK_SUN, MEGUMIN_EXPLOSION, DIAMOND, FLOWER, RINGS
+    animation_list:
+      - 'BLACK_SUN'
+      - 'DIAMOND'
+      - 'FLOWER'
+      - 'RINGS'
+      - 'MEGUMIN_EXPLOSION'
+    # List of sounds to use when the cracker explodes.
+    sound_list:
+      - 'entity.generic.explode'
+      - 'entity.player.levelup'
+    # You can add more rewards by just copying each section and adding the next number.
+    # Just copy the "1" section and rename it to "3" and so on.
+    rewards:
+      '1':
+        # Likeliness of this item being your reward when exploding.
+        chance: 30
+        # Commands to execute after the cracker explodes.
+        # You can use ${player} and ${random_int-int} and it will replace accordingly.
+        # ${random_20:10} will pick a number between 20 and 10. IMPORTANT: use higher number first.
+        # ${player} will be replaced with the player who threw the cracker
+        commands:
+          - 'give ${player} iron_ingot ${random_20:10}'
+          - 'say ${player} won :D!'
+        # We can set the chat messages to broadcast to the server if someone wins this reward.
+        # Useful for high tier items! (Supports both color codes and RGB) and also ${player} placeholder.
+        chat_messages:
+          - ""
+        # This section is in regards to showing a placeholder after the cracker explodes to show what you've got.
+        # (Only enable if you have DecentHolograms in your servers plugins folder)
+        after_placeholder:
+          # Self-explanatory. Whether it is enabled or not.
+          enabled: true
+          # Which material to show in the hologram.
+          material: IRON_INGOT
+          # Hologram lines, supports both colors and RGB.
+          lines:
+            - "&eYou got an iron ingot!"
+            - "&7--------"
+      '2':
+        chance: 70
+        commands:
+          - 'give ${player} stone_sword ${random_2:1}'
+          - 'effect give EliasEnamorado minecraft:speed'
+        chat_messages:
+          - "&e${player} &7won a stone sword and a speed boost!"
+        after_placeholder:
+          enabled: false
+          material: STONE_SWORD
+          lines:
+            - "&eNot enabled :[!"
+            - "&7--------"
+  special:
+    item:
+      material: FIREWORK_ROCKET
+      name: '&eParty Cracker: &lSpecial!'
+      lore:
+        - '&eDrop the item on the ground'
+        - '&7in order to receive &l&agod tier rewards!'
+      glow: true
+    explosion_time: 3
+    disappear_after: 5
+    particle_list:
+      - 'TOTEM'
+      - 'END_ROD'
+      - 'FLAME'
+      - 'NOTE'
+    animation_list:
+      - 'FLOWER'
+      - 'RINGS'
+      - 'MEGUMIN_EXPLOSION'
+    sound_list:
+      - 'entity.generic.explode'
+      - 'entity.player.levelup'
+    rewards:
+      '1':
+        chance: 30
+        commands:
+          - 'give ${player} diamond_sword 1'
+        chat_messages:
+          - "&e${player} found a &bDIAMOND SWORD!"
+        after_placeholder:
+          enabled: true
+          material: DIAMOND_SWORD
+          lines:
+            - "&bOlimpo Sword!"
+            - "&7--------"
+      '2':
+        chance: 70
+        commands:
+          - 'give ${player} coal ${random_4:2}'
+          - 'say Better luck next time :['
+        chat_messages:
+          - ""
+        after_placeholder:
+          enabled: true
+          material: COAL
+          lines:
+            - "&0Bad luck!"
+            - "&7--------"

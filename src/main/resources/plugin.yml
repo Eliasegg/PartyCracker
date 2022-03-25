@@ -1,0 +1,10 @@
+name: PartyCracker
+main: com.eliaseeg.partycracker.PartyCrackerPlugin
+api-version: 1.18
+version: ${project.version}
+author: Eliaseeg
+softdepend: [DecentHolograms]
+commands:
+  partycracker:
+    aliases: [partycrackers, pcracker, pcrackers]
+    usage: /partycracker give|reload username type amount
